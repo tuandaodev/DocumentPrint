@@ -1,0 +1,7 @@
+CREATE TABLE `indonhang` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `MaDH` VARCHAR(45) NULL,
+  `MaSP` VARCHAR(45) NULL,
+  `TrangThai` INT NULL DEFAULT 0,
+  `ThoiGianCapNhat` DATETIME NULL DEFAULT NOW(),
+  PRIMARY KEY (`id`));
