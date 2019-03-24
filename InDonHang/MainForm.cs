@@ -45,9 +45,6 @@ namespace InDonHang
         public MainForm()
         {
 
-
-
-
             if (IsProcessOpen())
             {
                 MessageBox.Show("Application is already running.");
@@ -554,6 +551,7 @@ namespace InDonHang
                     }
                 }
                 SetText("Kết thúc phiên In. Đợi phiên In tiếp theo.");
+                SetText("==========================================");
             } catch (Exception)
             {
                 Console.WriteLine("Co loi khi lay danh sach don hang.");

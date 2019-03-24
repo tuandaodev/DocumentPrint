@@ -5,7 +5,7 @@
     <ProjectGuid>{235A2673-AC49-482B-A0DA-DCBAABB41972}</ProjectGuid>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <OutputType>WinExe</OutputType>
+    <OutputType>Exe</OutputType>
     <RootNamespace>InHinhAnh</RootNamespace>
     <AssemblyName>InHinhAnh</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>

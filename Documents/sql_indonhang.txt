@@ -1,7 +1,22 @@
+//Tao bang indonhang
 CREATE TABLE `indonhang` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `MaDH` VARCHAR(45) NULL,
   `MaSP` VARCHAR(45) NULL,
   `TrangThai` INT NULL DEFAULT 0,
   `ThoiGianCapNhat` DATETIME NULL DEFAULT NOW(),
+  PRIMARY KEY (`id`));
+ 
+// Cap nhat bang donhang
+ALTER TABLE `donhang` 
+ADD COLUMN `TrangThai` TINYINT NULL DEFAULT 0 AFTER `ChotLuong`,
+ADD COLUMN `ThoiGianCapNhat` DATETIME NULL AFTER `TrangThai`;
+
+// Tao bang mahinhanh
+CREATE TABLE `khos2`.`mahinhanh` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `MaSP` VARCHAR(45) NULL,
+  `MaHinhAnh` VARCHAR(45) NULL,
+  `MaNV` INT NULL,
+  `ThoiGian` DATETIME NULL DEFAULT NOW(),
   PRIMARY KEY (`id`));

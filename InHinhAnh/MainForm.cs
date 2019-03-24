@@ -460,14 +460,14 @@ namespace InHinhAnh
             dynamic OrdersOjbect = null;
             try
             {
-                var response = client.PostAsync(Global.API_URL + "/print-danh-sach-don-hang", content).Result;
+                var response = client.PostAsync(Global.API_URL + "/print-danh-sach-anh-san-pham", content).Result;
                 var result = response.Content.ReadAsStringAsync().Result;
                 OrdersOjbect = JsonConvert.DeserializeObject(result);
             } catch (Exception ex)
             {
                 SetText("Có lỗi trong quá trình lấy danh sách đơn hàng. Thử lại.");
 
-                var response = client.PostAsync(Global.API_URL + "/print-danh-sach-don-hang", content).Result;
+                var response = client.PostAsync(Global.API_URL + "/print-danh-sach-anh-san-pham", content).Result;
                 var result = response.Content.ReadAsStringAsync().Result;
                 OrdersOjbect = JsonConvert.DeserializeObject(result);
             }
@@ -546,6 +546,7 @@ namespace InHinhAnh
                     }
                 }
                 SetText("Kết thúc phiên In. Đợi phiên In tiếp theo.");
+                SetText("==========================================");
             } catch (Exception)
             {
                 Console.WriteLine("Co loi khi lay danh sach don hang.");
