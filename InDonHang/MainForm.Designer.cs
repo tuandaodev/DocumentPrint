@@ -115,7 +115,7 @@ namespace InDonHang
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(131, 67);
+            this.label4.Location = new System.Drawing.Point(232, 67);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(61, 13);
             this.label4.TabIndex = 11;
@@ -126,9 +126,9 @@ namespace InDonHang
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(5, 10);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(143, 13);
+            this.label3.Size = new System.Drawing.Size(138, 13);
             this.label3.TabIndex = 10;
-            this.label3.Text = "Chọn thư mục chứa file PDF:";
+            this.label3.Text = "Chọn thư mục lưu file Excel:";
             // 
             // label1
             // 
@@ -146,11 +146,10 @@ namespace InDonHang
             this.selected_parper.Items.AddRange(new object[] {
             "A3",
             "A4",
-            "A5",
-            "A6"});
-            this.selected_parper.Location = new System.Drawing.Point(198, 62);
+            "A5"});
+            this.selected_parper.Location = new System.Drawing.Point(299, 62);
             this.selected_parper.Name = "selected_parper";
-            this.selected_parper.Size = new System.Drawing.Size(199, 21);
+            this.selected_parper.Size = new System.Drawing.Size(98, 21);
             this.selected_parper.TabIndex = 8;
             // 
             // buttonStart

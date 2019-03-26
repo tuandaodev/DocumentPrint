@@ -115,7 +115,7 @@ namespace InHinhAnh
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(131, 67);
+            this.label4.Location = new System.Drawing.Point(243, 67);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(61, 13);
             this.label4.TabIndex = 11;
@@ -148,9 +148,9 @@ namespace InHinhAnh
             "A4",
             "A5",
             "A6"});
-            this.selected_parper.Location = new System.Drawing.Point(198, 62);
+            this.selected_parper.Location = new System.Drawing.Point(310, 62);
             this.selected_parper.Name = "selected_parper";
-            this.selected_parper.Size = new System.Drawing.Size(199, 21);
+            this.selected_parper.Size = new System.Drawing.Size(87, 21);
             this.selected_parper.TabIndex = 8;
             // 
             // buttonStart

@@ -55,7 +55,7 @@ namespace InDonHang
 
             InitializeComponent();
             this.CenterToScreen();
-            this.notifyIcon1.Text = "Tự Động In Đơn Hàng";
+            this.notifyIcon1.Text = "In Đơn Hàng Tự Động";
 
             //ExcelReport test = new ExcelReport("A4");
             //dynamic item = "test";
@@ -74,7 +74,7 @@ namespace InDonHang
             // Initialize Tray Icon
             TrayIcon.ContextMenu = new ContextMenu(new MenuItem[]
             {
-                    new MenuItem("Hiện Tự động In", ShowMainForm),
+                    new MenuItem("Hiện In Đơn Hàng Tự Động", ShowMainForm),
                     new MenuItem("Thống Kê", ShowThongKe),
                     new MenuItem("Thoát và Đăng xuất", DangXuat),
                     new MenuItem("Thoát", ExitApp)
@@ -321,7 +321,7 @@ namespace InDonHang
             }
             if (pq.IsInError)
             {
-                statusReport = statusReport + "Is in an error state. ";
+                statusReport = statusReport + "Đang bị lỗi. ";
                 result++;
             }
             if (pq.IsNotAvailable)
@@ -442,7 +442,7 @@ namespace InDonHang
                         SetText(" - " + printer["Name"].ToString() + ": Is Ready.");
                     } else
                     {
-                        SetText(" - " + printer["Name"].ToString() + ": Is Ready, but not in Listed.");
+                        //SetText(" - " + printer["Name"].ToString() + ": Is Ready, but not in Listed.");
                     }
                 } else
                 {
@@ -488,6 +488,9 @@ namespace InDonHang
                 if (OrdersOjbect.isEmpty == 1)
                 {
                     SetText("Không có sản phẩm cần in.");
+                    SetText("Kết thúc phiên In. Đợi phiên In tiếp theo.");
+                    SetText("==========================================");
+                    return;
                 }
             } catch (Exception ex)
             {
@@ -559,9 +562,13 @@ namespace InDonHang
                         //pdfPrint.Print(item, list_print[select_printer], file_path);
                         ExcelReport excelReport = new ExcelReport(this.paper_type);
                         excelReport.Create(item, list_print[select_printer], file_path);
-                        SetText("Đã in đơn hàng " + item.MaDH + ": " + item.MaVanDonHang);
-                        SetCount();
-                        Update_Print((string)item.MaDH);
+                        if (excelReport.OK)
+                        {
+                            SetText("Đã in đơn hàng " + item.MaDH + ": " + item.MaVanDonHang);
+                            SetCount();
+                            Update_Print((string)item.MaDH);
+                        }
+                        
                     }
                     catch (Exception ex)
                     {
@@ -574,9 +581,12 @@ namespace InDonHang
                 SetText("==========================================");
              } catch (Exception ex)
               {
-                    Console.WriteLine(ex.Message);
-                    SetText("Có lỗi trong quá trình lấy danh sách đơn hàng.");
-              }
+                Console.WriteLine(ex.Message);
+                SetText("Có lỗi trong quá trình lấy danh sách đơn hàng.");
+                SetText("Kết thúc phiên In. Đợi phiên In tiếp theo.");
+                SetText("==========================================");
+                return;
+            }
 }
 
         private void Update_Print(string itemID)

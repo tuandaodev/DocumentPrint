@@ -55,7 +55,7 @@ namespace InHinhAnh
 
             InitializeComponent();
             this.CenterToScreen();
-            this.notifyIcon1.Text = "Tự Động In Đơn Hàng";
+            this.notifyIcon1.Text = "In Hình Ảnh Tự Động";
 
             init_combo_size();
 
@@ -69,7 +69,7 @@ namespace InHinhAnh
             // Initialize Tray Icon
             TrayIcon.ContextMenu = new ContextMenu(new MenuItem[]
             {
-                    new MenuItem("Hiện Tự động In", ShowMainForm),
+                    new MenuItem("Hiện In Hình Ảnh Tự Động", ShowMainForm),
                     new MenuItem("Thống Kê", ShowThongKe),
                     new MenuItem("Thoát và Đăng xuất", DangXuat),
                     new MenuItem("Thoát", ExitApp)
@@ -316,7 +316,7 @@ namespace InHinhAnh
             }
             if (pq.IsInError)
             {
-                statusReport = statusReport + "Is in an error state. ";
+                statusReport = statusReport + "Đang bị lỗi. ";
                 result++;
             }
             if (pq.IsNotAvailable)
@@ -437,7 +437,7 @@ namespace InHinhAnh
                         SetText(" - " + printer["Name"].ToString() + ": Is Ready.");
                     } else
                     {
-                        SetText(" - " + printer["Name"].ToString() + ": Is Ready, but not in Listed.");
+                        //SetText(" - " + printer["Name"].ToString() + ": Is Ready, but not in Listed.");
                     }
                 } else
                 {
@@ -484,6 +484,8 @@ namespace InHinhAnh
                 if (OrdersOjbect.isEmpty == 1)
                 {
                     SetText("Không có sản phẩm cần in.");
+                    SetText("Kết thúc phiên In. Đợi phiên In tiếp theo.");
+                    SetText("==========================================");
                     return;
                 }
             }
@@ -570,8 +572,10 @@ namespace InHinhAnh
                 SetText("==========================================");
             } catch (Exception)
             {
-                Console.WriteLine("Co loi khi lay danh sach don hang.");
                 SetText("Có lỗi trong quá trình lấy danh sách đơn hàng.");
+                SetText("Kết thúc phiên In. Đợi phiên In tiếp theo.");
+                SetText("==========================================");
+                return;
             }
         }
 

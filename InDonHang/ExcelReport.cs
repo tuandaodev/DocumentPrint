@@ -9,6 +9,7 @@ using System.Drawing;
 using OfficeOpenXml.Drawing;
 using System.Net;
 using Newtonsoft.Json.Linq;
+using System.Runtime.InteropServices;
 
 namespace InDonHang
 {
@@ -21,6 +22,7 @@ namespace InDonHang
         DataSet _ds;
         dynamic printObj;
         string paper_type = "A4";
+        public bool OK = true;
 
         public ExcelReport(string paper_type)
         {
@@ -42,38 +44,57 @@ namespace InDonHang
 
             Microsoft.Office.Interop.Excel.Worksheet ws = (Microsoft.Office.Interop.Excel.Worksheet)wb.Worksheets[1];
 
-            ws.PageSetup.PrintHeadings = false;
-            ws.PageSetup.BlackAndWhite = false;
-            ws.PageSetup.PrintGridlines = false;
-            ws.PageSetup.Zoom = false;
-            ws.PageSetup.FitToPagesWide = 1;
-            ws.PageSetup.FitToPagesTall = 1;
-            ws.PageSetup.Orientation = Microsoft.Office.Interop.Excel.XlPageOrientation.xlPortrait;
-
-            if (this.paper_type == "A4")
+            try
             {
-                ws.PageSetup.PaperSize = Microsoft.Office.Interop.Excel.XlPaperSize.xlPaperA4;
+                ws.PageSetup.PrintHeadings = false;
+                ws.PageSetup.BlackAndWhite = false;
+                ws.PageSetup.PrintGridlines = false;
+                ws.PageSetup.Zoom = false;
+                ws.PageSetup.FitToPagesWide = 1;
+                ws.PageSetup.FitToPagesTall = 1;
+                ws.PageSetup.Orientation = Microsoft.Office.Interop.Excel.XlPageOrientation.xlPortrait;
+
+                if (this.paper_type == "A4")
+                {
+                    ws.PageSetup.PaperSize = Microsoft.Office.Interop.Excel.XlPaperSize.xlPaperA4;
+                }
+                else if (paper_type == "A5")
+                {
+                    ws.PageSetup.PaperSize = Microsoft.Office.Interop.Excel.XlPaperSize.xlPaperA5;
+                }
+                else if (paper_type == "A3")
+                {
+                    ws.PageSetup.PaperSize = Microsoft.Office.Interop.Excel.XlPaperSize.xlPaperA3;
+                }
+                //else if (paper_type == "A6")
+                //{
+                //    ws.PageSetup.PaperSize = Microsoft.Office.Interop.Excel.XlPaperSize.xlPaper10x14;
+                //}
+                else
+                {
+                    ws.PageSetup.PaperSize = Microsoft.Office.Interop.Excel.XlPaperSize.xlPaperA4;
+                }
+
+
+                ws.PrintOut(Type.Missing, Type.Missing, Type.Missing, Type.Missing, this.printObj, Type.Missing, Type.Missing, Type.Missing);    // Type.Missing
+
+                app.Visible = false;
+                wb.Save();
+                wb.Close(false, Type.Missing, Type.Missing);
+                app.Quit();
+
+                Marshal.FinalReleaseComObject(ws);
+                Marshal.FinalReleaseComObject(wb);
+                Marshal.FinalReleaseComObject(app);
+            } catch (Exception ex)
+            {
+                Marshal.FinalReleaseComObject(ws);
+                Marshal.FinalReleaseComObject(wb);
+                Marshal.FinalReleaseComObject(app);
+                Console.WriteLine(ex.Message);
+                this.OK = false;
             }
-            else if (paper_type == "A5")
-            {
-                ws.PageSetup.PaperSize = Microsoft.Office.Interop.Excel.XlPaperSize.xlPaperA5;
-            }
-            else if (paper_type == "A3")
-            {
-                ws.PageSetup.PaperSize = Microsoft.Office.Interop.Excel.XlPaperSize.xlPaperA4;
-            } else
-            {
-                ws.PageSetup.PaperSize = Microsoft.Office.Interop.Excel.XlPaperSize.xlPaperA4;
-            }
-                
-
-           ws.PrintOut(Type.Missing, Type.Missing, Type.Missing, Type.Missing, this.printObj, Type.Missing, Type.Missing, Type.Missing);    // Type.Missing
-
-            app.Visible = false;
-
-            wb.Save();
-            wb.Close(false, Type.Missing, Type.Missing);
-            app.Quit();
+            
         }
 
         private void insert_image(ref ExcelWorksheet worksheet, string imgUrl, int rowIndex, int columnIndex)
@@ -106,7 +127,9 @@ namespace InDonHang
         {
             // Khởi tạo data table
             DataTable dt = new DataTable();
-            templateFile = new FileInfo("D:\\order_template.xlsx");
+
+            string current_folder = Directory.GetCurrentDirectory();
+            templateFile = new FileInfo(current_folder + @"\order_template.xlsx");
 
             //item.id = "test";
 
@@ -263,6 +286,7 @@ namespace InDonHang
 
         private Bitmap Base64StringToBitmap(string base64String)
         {
+            if (String.IsNullOrEmpty(base64String)) return null;
             var bitmapData = Convert.FromBase64String(FixBase64ForImage(base64String));
             var streamBitmap = new System.IO.MemoryStream(bitmapData);
             var bitmap = new Bitmap((Bitmap)Image.FromStream(streamBitmap));
