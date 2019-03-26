@@ -491,7 +491,6 @@ namespace InDonHang
                 }
             } catch (Exception ex)
             {
-
             }
 
             try
@@ -575,9 +574,9 @@ namespace InDonHang
                 SetText("==========================================");
              } catch (Exception ex)
               {
-                        Console.WriteLine(ex.Message);
-                        SetText("Có lỗi trong quá trình lấy danh sách đơn hàng.");
-                }
+                    Console.WriteLine(ex.Message);
+                    SetText("Có lỗi trong quá trình lấy danh sách đơn hàng.");
+              }
 }
 
         private void Update_Print(string itemID)

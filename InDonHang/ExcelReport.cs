@@ -54,12 +54,20 @@ namespace InDonHang
             {
                 ws.PageSetup.PaperSize = Microsoft.Office.Interop.Excel.XlPaperSize.xlPaperA4;
             }
-            else
+            else if (paper_type == "A5")
             {
                 ws.PageSetup.PaperSize = Microsoft.Office.Interop.Excel.XlPaperSize.xlPaperA5;
             }
+            else if (paper_type == "A3")
+            {
+                ws.PageSetup.PaperSize = Microsoft.Office.Interop.Excel.XlPaperSize.xlPaperA4;
+            } else
+            {
+                ws.PageSetup.PaperSize = Microsoft.Office.Interop.Excel.XlPaperSize.xlPaperA4;
+            }
+                
 
-            ws.PrintOut(Type.Missing, Type.Missing, Type.Missing, Type.Missing, this.printObj, Type.Missing, Type.Missing, Type.Missing);    // Type.Missing
+           ws.PrintOut(Type.Missing, Type.Missing, Type.Missing, Type.Missing, this.printObj, Type.Missing, Type.Missing, Type.Missing);    // Type.Missing
 
             app.Visible = false;
 
@@ -178,8 +186,11 @@ namespace InDonHang
                     worksheet.Cells[row_index_image, col_index].Value = (string)itemMHA.MaHinhAnh;
 
                     string url = (string)itemMHA.LinkAnh;
-                    insert_image(ref worksheet, url, row_index_image, col_index);
-                    //worksheet.Cells[row_index + 1, col_index].Value = "Anh" + (i + 1).ToString();
+                    if (!String.IsNullOrEmpty(url))
+                    {
+                        insert_image(ref worksheet, url, row_index_image, col_index);
+                        //worksheet.Cells[row_index + 1, col_index].Value = "Anh" + (i + 1).ToString();
+                    }
                     i++;
                 }
 
@@ -188,30 +199,39 @@ namespace InDonHang
                 int count_product_text = 0;
                 int total_row_in_template_text = 50; // 50*2 = 100 san pham - Set trong template
 
-                foreach (var itemMSP in item.MaSP.Children())
+                try
                 {
-                    count_product_text++;
+                    foreach (var itemMSP in item.MaSP.Children())
+                    {
+                        count_product_text++;
+                    }
+                } catch (Exception)
+                {
+
                 }
+                
 
                 int product_per_side = (count_product_text/2) + (count_product_text%2);
 
                 int count_printed = 0;
 
-
-                foreach (var itemMSP in item.MaSP.Children())
+                if (count_product_text > 0)
                 {
-                    //count_product_text++;
-                    int col_index = 1; // A
-                    int row_index_temp = row_index_text + count_printed;
-                    count_printed++;
-                    if (count_printed > product_per_side)
+                    foreach (var itemMSP in item.MaSP.Children())
                     {
-                        col_index = 4;
-                        row_index_temp = row_index_text + (count_printed % (product_per_side+1));
+                        //count_product_text++;
+                        int col_index = 1; // A
+                        int row_index_temp = row_index_text + count_printed;
+                        count_printed++;
+                        if (count_printed > product_per_side)
+                        {
+                            col_index = 4;
+                            row_index_temp = row_index_text + (count_printed % (product_per_side + 1));
+                        }
+                        worksheet.Cells[row_index_temp, col_index].Value = count_printed.ToString();
+                        worksheet.Cells[row_index_temp, col_index + 1].Value = (string)itemMSP.MaSP;
+                        worksheet.Cells[row_index_temp, col_index + 2].Value = (string)itemMSP.MaHinhAnh;
                     }
-                    worksheet.Cells[row_index_temp, col_index].Value = count_printed.ToString();
-                    worksheet.Cells[row_index_temp, col_index + 1].Value = (string)itemMSP.MaSP;
-                    worksheet.Cells[row_index_temp, col_index + 2].Value = (string)itemMSP.MaHinhAnh;
                 }
 
                 // Start Delete above content
@@ -237,8 +257,8 @@ namespace InDonHang
                 package.Dispose();
             }
 
-            //this.printObj = printObj;
-            //this.PrintExcel();
+            this.printObj = printObj;
+            this.PrintExcel();
         }
 
         private Bitmap Base64StringToBitmap(string base64String)
