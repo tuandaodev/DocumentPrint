@@ -37,6 +37,7 @@ namespace InDonHang
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label5 = new System.Windows.Forms.Label();
             this.btn_deleteSettings = new System.Windows.Forms.Button();
             this.btn_loadSettings = new System.Windows.Forms.Button();
             this.btn_saveSettings = new System.Windows.Forms.Button();
@@ -64,6 +65,7 @@ namespace InDonHang
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.label5);
             this.groupBox1.Controls.Add(this.btn_deleteSettings);
             this.groupBox1.Controls.Add(this.btn_loadSettings);
             this.groupBox1.Controls.Add(this.btn_saveSettings);
@@ -81,6 +83,14 @@ namespace InDonHang
             this.groupBox1.Size = new System.Drawing.Size(786, 96);
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(101, 67);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(0, 13);
+            this.label5.TabIndex = 14;
             // 
             // btn_deleteSettings
             // 
@@ -324,5 +334,6 @@ namespace InDonHang
         private System.Windows.Forms.Button btn_saveSettings;
         private System.Windows.Forms.CheckBox checkBox_minimizeStartup;
         private System.Windows.Forms.Button btn_deleteSettings;
+        private System.Windows.Forms.Label label5;
     }
 }
