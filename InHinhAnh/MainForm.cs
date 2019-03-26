@@ -460,16 +460,37 @@ namespace InHinhAnh
             dynamic OrdersOjbect = null;
             try
             {
+                Console.WriteLine(Global.API_URL + "/print-danh-sach-anh-san-pham");
                 var response = client.PostAsync(Global.API_URL + "/print-danh-sach-anh-san-pham", content).Result;
                 var result = response.Content.ReadAsStringAsync().Result;
                 OrdersOjbect = JsonConvert.DeserializeObject(result);
             } catch (Exception ex)
             {
-                SetText("Có lỗi trong quá trình lấy danh sách đơn hàng. Thử lại.");
+                try
+                {
+                    SetText("Có lỗi trong quá trình lấy danh sách đơn hàng. Thử lại.");
 
-                var response = client.PostAsync(Global.API_URL + "/print-danh-sach-anh-san-pham", content).Result;
-                var result = response.Content.ReadAsStringAsync().Result;
-                OrdersOjbect = JsonConvert.DeserializeObject(result);
+                    var response = client.PostAsync(Global.API_URL + "/print-danh-sach-anh-san-pham", content).Result;
+                    var result = response.Content.ReadAsStringAsync().Result;
+                    OrdersOjbect = JsonConvert.DeserializeObject(result);
+                } catch (Exception ex2)
+                {
+                    
+                }
+            }
+
+            try
+            {
+                if (OrdersOjbect.isEmpty == 1)
+                {
+                    SetText("Không có sản phẩm cần in.");
+                    return;
+                }
+            }
+
+            catch (Exception ex)
+            {
+
             }
 
             try

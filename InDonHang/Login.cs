@@ -55,8 +55,8 @@ namespace InDonHang
 
             var content = new FormUrlEncodedContent(values);
 
-            //try
-            //{
+            try
+            {
 
                 var response = client.PostAsync(Global.API_URL + "/dang-nhap", content).Result;
 
@@ -77,29 +77,28 @@ namespace InDonHang
                     Properties.Settings.Default.Upgrade();
                     Properties.Settings.Default.Save();
 
-                    //try
-                    //{
+                    try
+                    {
                         this.Hide();
                         var form2 = new MainForm();
                         form2.Closed += (s, args) => this.Close();
                         form2.Show();
-                    //}
-                    //catch (Exception)
-                    //{
-                    //    MessageBox.Show("Lỗi khi load form chính. Vui lòng thử lại.");
-                    //    this.Close();
-                    //    Application.Exit();
-                    //    Environment.Exit(0);
-                    //}
+                    }
+                    catch (Exception)
+                    {
+                        MessageBox.Show("Lỗi khi load form chính. Vui lòng thử lại.");
+                        this.Close();
+                        Application.Exit();
+                        Environment.Exit(0);
+                    }
                 }
 
-            //}
-            //catch (Exception ex)
-            //{
-            //    Console.WriteLine(ex.Message);
-            //    MessageBox.Show("Username hoặc mật khẩu không đúng. Vui lòng thử lại.");
-            //    throw;
-            //}
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                MessageBox.Show("Username hoặc mật khẩu không đúng. Vui lòng thử lại.");
+            }
 
         }
 

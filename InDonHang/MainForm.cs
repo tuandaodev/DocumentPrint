@@ -57,10 +57,10 @@ namespace InDonHang
             this.CenterToScreen();
             this.notifyIcon1.Text = "Tự Động In Đơn Hàng";
 
-            ExcelReport test = new ExcelReport("A4");
-            dynamic item = "test";
-            test.Create(item, item);
-            return;
+            //ExcelReport test = new ExcelReport("A4");
+            //dynamic item = "test";
+            //test.Create(item, item);
+            //return;
 
             init_combo_size();
 
@@ -470,29 +470,48 @@ namespace InDonHang
                 OrdersOjbect = JsonConvert.DeserializeObject(result);
             } catch (Exception ex)
             {
-                SetText("Có lỗi trong quá trình lấy danh sách đơn hàng. Thử lại.");
+                try
+                {
+                    SetText("Có lỗi trong quá trình lấy danh sách đơn hàng. Thử lại.");
 
-                var response = client.PostAsync(Global.API_URL + "/print-danh-sach-don-hang", content).Result;
-                var result = response.Content.ReadAsStringAsync().Result;
-                OrdersOjbect = JsonConvert.DeserializeObject(result);
+                    var response = client.PostAsync(Global.API_URL + "/print-danh-sach-don-hang", content).Result;
+                    var result = response.Content.ReadAsStringAsync().Result;
+                    OrdersOjbect = JsonConvert.DeserializeObject(result);
+                }
+                catch (Exception) {
+
+                }
             }
 
             try
             {
-                PDFPrint pdfPrint = new PDFPrint(this.paper_type);
-
-                int count_excel = 0;
-                foreach (var item in OrdersOjbect)
+                if (OrdersOjbect.isEmpty == 1)
                 {
-                    count_excel++;
-                    Console.WriteLine("{0} {1} {2} {3}\n", item.id, item.MaDH, item.MaHinhAnh, item.MaHinhAnh + ".pdf");
+                    SetText("Không có sản phẩm cần in.");
+                }
+            } catch (Exception ex)
+            {
 
-                    string file_path = this.foldername + @"\" + item.MaHinhAnh + ".pdf";
-                    if (!File.Exists(file_path))
-                    {
-                        SetText("[ERROR] Lỗi không tồn tại file " + file_path);
-                        continue;
-                    }
+            }
+
+            try
+            {
+                int count_excel = 0;
+                foreach (var item_temp in OrdersOjbect)
+                {
+                    var item = item_temp;
+                    count_excel++;
+                    Console.WriteLine(item.MaDH);
+                    Console.WriteLine(item.MaVanDonHang);
+
+                    Console.WriteLine("{0} {1} {2} \n", item.MaDH, item.MaVanDonHang, item.MaDH + ".pdf");
+
+                    string file_path = this.foldername + @"\" + item.MaDH + ".xlsx";
+                    //if (!File.Exists(file_path))
+                    //{
+                    //    SetText("[ERROR] Lỗi không tồn tại file " + file_path);
+                    //    continue;
+                    //}
 
                     bool get_printer_ready = false;
                     int select_printer = 0;
@@ -538,26 +557,28 @@ namespace InDonHang
                     try
                     {
                         Console.WriteLine("Đã kiểm tra và lấy máy in " + list_print[select_printer]);
-                        pdfPrint.Print(item, list_print[select_printer], file_path);
-                        SetText("Đã in đơn hàng " + item.MaDH + ": " + item.MaHinhAnh);
+                        //pdfPrint.Print(item, list_print[select_printer], file_path);
+                        ExcelReport excelReport = new ExcelReport(this.paper_type);
+                        excelReport.Create(item, list_print[select_printer], file_path);
+                        SetText("Đã in đơn hàng " + item.MaDH + ": " + item.MaVanDonHang);
                         SetCount();
-                        Update_Print((string)item.id);
+                        Update_Print((string)item.MaDH);
                     }
                     catch (Exception ex)
                     {
                         SetText(ex.Message);
-                        SetText("[ERROR] Lỗi in đơn hàng " + item.MaDH + ": " + item.MaHinhAnh);
+                        SetText("[ERROR] Lỗi in đơn hàng " + item.MaDH + ": " + item.MaVanDonHang);
                         Console.WriteLine(ex.Message);
                     }
                 }
                 SetText("Kết thúc phiên In. Đợi phiên In tiếp theo.");
                 SetText("==========================================");
-            } catch (Exception)
-            {
-                Console.WriteLine("Co loi khi lay danh sach don hang.");
-                SetText("Có lỗi trong quá trình lấy danh sách đơn hàng.");
-            }
-        }
+             } catch (Exception ex)
+              {
+                        Console.WriteLine(ex.Message);
+                        SetText("Có lỗi trong quá trình lấy danh sách đơn hàng.");
+                }
+}
 
         private void Update_Print(string itemID)
         {
@@ -569,7 +590,7 @@ namespace InDonHang
                 };
             var content = new FormUrlEncodedContent(values);
 
-            var response = client.PostAsync(Global.API_URL + "/print-update", content).Result;
+            var response = client.PostAsync(Global.API_URL + "/print-don-hang-update", content).Result;
 
             var result = response.Content.ReadAsStringAsync().Result;
 

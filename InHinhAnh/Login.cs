@@ -98,7 +98,6 @@ namespace InHinhAnh
             {
                 Console.WriteLine(ex.Message);
                 MessageBox.Show("Username hoặc mật khẩu không đúng. Vui lòng thử lại.");
-                throw;
             }
         }
 
