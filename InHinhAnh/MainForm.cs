@@ -226,6 +226,12 @@ namespace InHinhAnh
             int check_print = 0;
             foreach (PrintQueue pq2 in myPrintQueues)
             {
+                if (!this.checkedList_mayin.CheckedItems.Contains(pq2.FullName))
+                {
+                    Console.WriteLine("Skip resume printer because not in the list.");
+                    continue;
+                }
+
                 Console.WriteLine(pq2.FullName);
 
                 PrintQueue pq = new PrintQueue(myPS, pq2.FullName, PrintSystemDesiredAccess.AdministratePrinter);
@@ -237,7 +243,7 @@ namespace InHinhAnh
                 {
                     list_print.Add(pq.FullName);
                 } else {
-                    if (!pq.IsOffline && pq.NumberOfJobs > 0)
+                    if (!pq.IsOffline && !pq.IsBusy && !pq.IsPrinting && pq.NumberOfJobs > 0)
                     {
                         try
                         {
@@ -299,6 +305,16 @@ namespace InHinhAnh
         public int SpotTroubleUsingProperties(ref String statusReport, PrintQueue pq)
         {
             int result = 0;
+            if (pq.IsPrinting && pq.NumberOfJobs > 1)
+            {
+                statusReport = statusReport + "Đang in. ";
+                result++;
+            }
+            if (pq.IsBusy)
+            {
+                statusReport = statusReport + "Đang bận. ";
+                result++;
+            }
             if (pq.HasPaperProblem)
             {
                 statusReport = statusReport + "Has a paper problem. ";

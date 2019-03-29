@@ -69,7 +69,7 @@
             this.input_password.PasswordChar = '*';
             this.input_password.Size = new System.Drawing.Size(100, 20);
             this.input_password.TabIndex = 2;
-            this.input_password.Text = "123456";
+            this.input_password.Text = "1";
             // 
             // button1
             // 

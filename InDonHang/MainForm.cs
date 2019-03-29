@@ -232,6 +232,10 @@ namespace InDonHang
             foreach (PrintQueue pq2 in myPrintQueues)
             {
                 Console.WriteLine(pq2.FullName);
+                if (!this.checkedList_mayin.CheckedItems.Contains(pq2.FullName))
+                {
+                    continue;
+                }
 
                 PrintQueue pq = new PrintQueue(myPS, pq2.FullName, PrintSystemDesiredAccess.AdministratePrinter);
                 pq.Refresh();
@@ -242,7 +246,7 @@ namespace InDonHang
                 {
                     list_print.Add(pq.FullName);
                 } else {
-                    if (!pq.IsOffline && pq.NumberOfJobs > 0)
+                    if (!pq.IsOffline && !pq.IsBusy && !pq.IsPrinting && pq.NumberOfJobs > 0)
                     {
                         try
                         {
@@ -293,6 +297,7 @@ namespace InDonHang
                     } else
                     {
                         SetText(statusReport);
+                        return false;
                     }
                 }
                 
@@ -304,6 +309,16 @@ namespace InDonHang
         public int SpotTroubleUsingProperties(ref String statusReport, PrintQueue pq)
         {
             int result = 0;
+            if (pq.IsPrinting && pq.NumberOfJobs > 1)
+            {
+                statusReport = statusReport + "Đang in. ";
+                result++;
+            }
+            if (pq.IsBusy)
+            {
+                statusReport = statusReport + "Đang bận. ";
+                result++;
+            }
             if (pq.HasPaperProblem)
             {
                 statusReport = statusReport + "Has a paper problem. ";
