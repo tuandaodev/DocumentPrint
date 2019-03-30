@@ -20,3 +20,4 @@ D:\DocumentPrint\InDonHang\obj\Release\InDonHang.MainForm.resources
 D:\DocumentPrint\InDonHang\obj\Release\InDonHang.ThongKe.resources
 D:\DocumentPrint\InDonHang\obj\Release\InDonHang.csproj.GenerateResource.Cache
 D:\DocumentPrint\InDonHang\obj\Release\InDonHang.exe
+D:\DocumentPrint\InDonHang\obj\Release\InDonHang.csprojResolveAssemblyReference.cache

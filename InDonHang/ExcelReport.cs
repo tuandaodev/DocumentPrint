@@ -269,6 +269,10 @@ namespace InDonHang
 
                 // Start Delete above content
                 int so_dong_con_lai_image = (total_row_in_template_image - (int)count_product_image / 6) * 2 - 2;
+                //if (count_product_image % 6 == 0)
+                //{
+                //    so_dong_con_lai_image++;
+                //}
                 // Go to empty row
                 row_index_image = row_index_image + 2;
                 //Console.WriteLine(so_dong_con_lai_image);

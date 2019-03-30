@@ -18,4 +18,3 @@ D:\DocumentPrint\InHinhAnh\obj\Release\InHinhAnh.MainForm.resources
 D:\DocumentPrint\InHinhAnh\obj\Release\InHinhAnh.ThongKe.resources
 D:\DocumentPrint\InHinhAnh\obj\Release\InHinhAnh.csproj.GenerateResource.Cache
 D:\DocumentPrint\InHinhAnh\obj\Release\InHinhAnh.exe
-D:\DocumentPrint\InHinhAnh\obj\Release\InHinhAnh.csprojResolveAssemblyReference.cache

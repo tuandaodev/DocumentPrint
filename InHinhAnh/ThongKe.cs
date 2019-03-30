@@ -22,7 +22,7 @@ namespace InHinhAnh
 
             try
             {
-                string ThongKe_URL = Global.API_URL + "/print-don-hang-thong-ke";
+                string ThongKe_URL = Global.API_URL + "/print-thong-ke";
                 string result = this.GET(ThongKe_URL);
 
                 dynamic thongkeObj = JsonConvert.DeserializeObject(result);

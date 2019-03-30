@@ -51,7 +51,7 @@
             this.input_username.Name = "input_username";
             this.input_username.Size = new System.Drawing.Size(100, 20);
             this.input_username.TabIndex = 1;
-            this.input_username.Text = "thanhxuan";
+            this.input_username.Text = "thunghiem";
             // 
             // label2
             // 
@@ -69,7 +69,7 @@
             this.input_password.PasswordChar = '*';
             this.input_password.Size = new System.Drawing.Size(100, 20);
             this.input_password.TabIndex = 2;
-            this.input_password.Text = "1";
+            this.input_password.Text = "123456";
             // 
             // button1
             // 

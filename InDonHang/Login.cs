@@ -58,7 +58,7 @@ namespace InDonHang
             try
             {
 
-                var response = client.PostAsync(Global.API_URL + "/dang-nhap", content).Result;
+                var response = client.PostAsync(Global.API_LOGIN + "/dang-nhap", content).Result;
 
                 var result = response.Content.ReadAsStringAsync().Result;
 
